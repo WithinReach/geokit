@@ -165,6 +165,13 @@ class LatLngTest < Test::Unit::TestCase #:nodoc: all
     assert_equal res, Geokit::LatLng.new(lat.to_i, lng.to_i)
     res = Geokit::LatLng.normalize([lat, lng])
     assert_equal res, Geokit::LatLng.new(lat, lng)
+    res = Geokit::LatLng.normalize({lat:lat, lng:lng})
+    assert_equal res, Geokit::LatLng.new(lat, lng)
+    res = Geokit::LatLng.normalize({'lat' => lat, 'lng' => lng})
+    assert_equal res, Geokit::LatLng.new(lat, lng)
+    assert_raises("Must initialize with a Hash with both lat and lng") do
+      res = Geokit::LatLng.normalize({'fail' => lat, 'lng' => lng})
+    end
   end
 
   def test_hash

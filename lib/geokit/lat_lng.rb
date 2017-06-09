@@ -104,6 +104,11 @@ module Geokit
           raise(ArgumentError,
             'Must initialize with an Array with both latitude and longitude')
         Geokit::LatLng.new(thing[0], thing[1])
+      when Hash
+        ( !thing[:lat].nil? && !thing[:lng].nil? ) || ( !thing['lat'].nil? && !thing['lng'].nil? ) or
+          raise(ArgumentError,
+            'Must initialize with a Hash with both lat and lng')
+          Geokit::LatLng.new(thing[:lat] || thing['lat'], thing[:lng] || thing['lng'])
       when LatLng # will also be true for GeoLocs
         thing
       else
